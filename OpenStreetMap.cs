@@ -22,7 +22,7 @@ public class OpenStreetMap : ComponentBase, IDisposable
 
     protected override void BuildRenderTree(RenderTreeBuilder builder)
     {
-        if (!this.Visible) return;
+        if (!Visible) return;
 
         builder.AddContent(8, " ");
         builder.OpenElement(9, "div");
