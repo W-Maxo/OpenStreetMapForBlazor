@@ -1,0 +1,33 @@
+﻿@using Microsoft.Extensions.Configuration
+@using OpenStreetMapForBlazor
+@inject IConfiguration config;
+
+@*@inherits OpenStreetMapForBlazor.OpenStreetMap*@
+
+<OpenStreetMap ApiKey=@(config.GetValue<string>("Main:OSMapKey")) Zoom="@zoom" Center="@(CenterMap)" MapClick="@MapClick" MarkerClick="@MarkerClick">
+    <Markers>
+        <MapMarker Title="" Label="" Position="@(CenterMap)" />
+    </Markers>
+</OpenStreetMap>
+
+
+@code {
+    int zoom = 11;
+
+    [Parameter]
+    public MapPosition CenterMap { get; set; }
+
+    [Parameter]
+    public EventCallback<MapClickEventArgs> Click { get; set; }
+
+    void MapClick(MapClickEventArgs args)
+    {
+        StateHasChanged();
+        Click.InvokeAsync(args);
+    }
+
+    void MarkerClick(MapMarker marker)
+    {
+        StateHasChanged();
+    }
+}

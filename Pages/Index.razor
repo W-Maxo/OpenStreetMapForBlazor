@@ -1,0 +1,38 @@
+﻿@page "/"
+@inject IConfiguration config;
+
+<PageTitle>Index</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<SurveyPrompt Title="How is Blazor working for you?" />
+
+<div style="height: 500px;">
+    <OSMap Click="@MapClickEvent" CenterMap="@defPosition" />
+</div>
+
+@code {
+    public MapPosition position;
+    public bool btnActive;
+
+    MapPosition? defPosition;
+
+    protected override async Task OnInitializedAsync()
+    {
+        defPosition = new MapPosition() { Lat = config.GetValue<double>("Main:DefLat"), Lng = config.GetValue<double>("Main:DefLng") };
+    }
+
+    public void MapClickEvent(MapClickEventArgs args)
+    {
+        //events.Add(DateTime.Now, $"Map clicked at Lat: {args.Position.Lat}, Lng: {args.Position.Lng}");
+
+        if (args != null) position = args.Position;
+
+        //btnActive = !(position.Lng == defPosition.Lng && position.Lat == defPosition.Lat);
+        //actualJson = JsonConvert.SerializeObject(args);
+
+        //StateHasChanged();
+    }
+}
